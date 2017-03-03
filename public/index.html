@@ -30,5 +30,12 @@
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=triggerGoogleLoaded" async defer></script>
+    <script type="text/javascript">
+      var gapi=window.gapi=window.gapi||{};
+      function triggerGoogleLoaded() {
+        window.dispatchEvent(new Event('google-loaded'));
+      }
+    </script>
   </body>
 </html>

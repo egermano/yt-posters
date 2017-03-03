@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import ReactFireMixin from 'reactfire';
-import reactMixin from 'react-mixin';
 import Login from './Login';
+import Channel from './Channel';
 
 class App extends Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {user: undefined};
+  }
 
   handleLogin(e) {
     this.setState({
@@ -25,12 +27,14 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
 
-        <Login onChange={this.handleLogin}/>
+        <Login onChange={this.handleLogin.bind(this)}/>
+
+        <div>
+          <Channel user={this.state.user}/>
+        </div>
       </div>
     );
   }
 }
-
-reactMixin(App.prototype, ReactFireMixin)
 
 export default App;
