@@ -10,9 +10,10 @@ class App extends Component {
     this.state = {user: undefined};
   }
 
-  handleLogin(e) {
+  handleLogin(e, auth) {
     this.setState({
-      user: e
+      user: e,
+      gapiAuth: auth
     });
   }
 
@@ -30,7 +31,10 @@ class App extends Component {
         <Login onChange={this.handleLogin.bind(this)}/>
 
         <div>
-          <Channel user={this.state.user}/>
+          {this.state.user && this.state.gapiAuth?
+            <Channel user={this.state.user}/>
+            : ''
+          }
         </div>
       </div>
     );

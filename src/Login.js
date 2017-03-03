@@ -8,11 +8,12 @@ class Login extends Component {
   }
 
   handleGoogleApi() {
+    console.log('handleGoogleApi');
     window.gapi.client.load('youtube', 'v3', this.handleYoutube.bind(this));
     this.setState({
       gapi: true
     });
-
+    this.gapiAuth();
   }
 
   handleYoutube() {
@@ -20,31 +21,30 @@ class Login extends Component {
     this.setState({
       youtube: true
     });
+
+    this.gapiAuth();
   }
 
-  componentWillUpdate(props, state) {
-    if (state.gapi && state.youtube && state.user && state.user.accessToken) {
-      // reformat the token object for the Google Drive API
+  gapiAuth() {
+    if (this.state.gapi && this.state.youtube && this.state.user && this.state.user.accessToken) {
       var tokenObject = {
-        access_token: state.user.accessToken
+        access_token: this.state.user.accessToken
       };
 
       // set the authentication token
       window.gapi.auth.setToken(tokenObject);
 
-      var user = this.state.user;
-      user.gapiAuth = true;
-
       this.setState({
-        user: user
+        gapiAuth: true
       });
+
+      console.log('gapiAuth');
+
+      // send to parent the user
+      this.props.onChange(this.state.user, this.state.gapiAuth);
       //
       // var results = window.gapi.client.youtube.channels.list('contentDetails', {mine: true});
     }
-  }
-
-  componentDidMount() {
-    window.addEventListener('google-loaded', this.handleGoogleApi.bind(this));
   }
 
   userStateChange(user) {
@@ -55,6 +55,7 @@ class Login extends Component {
 
       // send to parent the user
       this.props.onChange(user);
+      this.gapiAuth();
     }
   }
 
@@ -76,6 +77,10 @@ class Login extends Component {
 
 
     }.bind(this));
+  }
+
+  componentDidMount() {
+    window.addEventListener('google-loaded', this.handleGoogleApi.bind(this));
   }
 
   render() {
