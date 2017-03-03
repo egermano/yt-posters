@@ -11,7 +11,7 @@ class Channel extends Component {
   }
 
   componentWillMount() {
-    var getAllPages= (request) => {
+    var getAllPages = (request) => {
       request.execute((resp) => {
         this.populateChannels(resp.items);
         var nextPageToken = resp.nextPageToken;

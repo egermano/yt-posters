@@ -17,11 +17,10 @@ class Login extends Component {
   }
 
   handleYoutube() {
-    console.log('youtube');
+    console.log('handleYoutube');
     this.setState({
       youtube: true
     });
-
     this.gapiAuth();
   }
 
@@ -109,7 +108,7 @@ class Login extends Component {
     provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
     provider.addScope('https://www.googleapis.com/auth/youtube.readonly');
 
-    Firebase.auth().signInWithPopup(provider).then(function(authData){
+    Firebase.auth().signInWithPopup(provider).then((authData) => {
       Firebase.database().ref('users/' + authData.user.uid).set({
         accessToken: authData.credential.accessToken,
         idToken: authData.credential.idToken,
